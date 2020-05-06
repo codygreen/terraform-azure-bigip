@@ -82,7 +82,13 @@ resource "azurerm_network_interface" "mgmt-nic" {
   }
 }
 
+resource "azurerm_network_interface_security_group_association" "mgmt-nic-security" {
+  network_interface_id      = azurerm_network_interface.mgmt-nic.id
+  network_security_group_id = var.bigip_map[0].network_interfaces[0].subnet_security_group_ids[0]
+}
+
 # Setup Onboarding scripts
 data "template_file" "vm_onboard" {
   template = "${file("${path.module}/custom_data.tpl")}"
 }
+

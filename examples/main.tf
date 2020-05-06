@@ -32,7 +32,7 @@ locals {
           "public_ip"         = true
           "subnet_id"         = azurerm_subnet.management.id
           "subnet_security_group_ids" = [
-            null
+            azurerm_network_security_group.bigip.id
           ]
         }
       }
