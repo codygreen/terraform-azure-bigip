@@ -76,3 +76,15 @@ control "Telemetry Streaming Available" do
         its('release') { should eq '1' } # this should be replaced with a test using the json resource
   end
 end 
+
+control "BIG-IP License" do
+  impact 1.0
+  title "BIGIP has License"
+  describe json(content: http("https://#{input('bigip_host')}:#{input('bigip_port')}/mgmt/tm/sys/license",
+            auth: {user: 'admin', pass: input('bigip_password')},
+            params: {format: 'html'},
+            method: 'GET',
+            ssl_verify: false).body) do
+    its('registrationKey') { should_not match "" }
+  end
+end

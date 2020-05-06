@@ -90,5 +90,11 @@ resource "azurerm_network_interface_security_group_association" "mgmt-nic-securi
 # Setup Onboarding scripts
 data "template_file" "vm_onboard" {
   template = "${file("${path.module}/custom_data.tpl")}"
+
+  vars = {
+    DO_URL  = var.DO_URL
+    AS3_URL = var.AS3_URL
+    TS_URL  = var.TS_URL
+  }
 }
 
